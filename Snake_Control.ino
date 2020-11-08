@@ -50,17 +50,6 @@ void loop() {
     }
   }
 
-  //Serial.print("Switch:  ");
-  //Serial.print(digitalRead(SW_pin));
-  //Serial.print("\n");
-  //Serial.print("X-axis: ");
-  //Serial.print(analogRead(X_pin));
-  //Serial.print("\n");
-  //Serial.print("Y-axis: ");
-  //Serial.println(analogRead(Y_pin));
-  //Serial.print("\n\n");
-  //delay(500);
-
   Wire.beginTransmission(MPU_addr);
   Wire.write(0x3B);  // starting with register 0x3B (ACCEL_XOUT_H)
   Wire.endTransmission(false);
@@ -72,30 +61,18 @@ void loop() {
   GyX = Wire.read() << 8 | Wire.read(); // 0x43 (GYRO_XOUT_H) & 0x44 (GYRO_XOUT_L)
   GyY = Wire.read() << 8 | Wire.read(); // 0x45 (GYRO_YOUT_H) & 0x46 (GYRO_YOUT_L)
   GyZ = Wire.read() << 8 | Wire.read(); // 0x47 (GYRO_ZOUT_H) & 0x48 (GYRO_ZOUT_L)
-  //Serial.print(" | AcX = "); Serial.println(AcX);
-  //Serial.print(" | AcY = "); Serial.println(AcY);
-  //Serial.print(" | AcZ = "); Serial.println(AcZ);
-  //Serial.print(" | Tmp = "); Serial.println(Tmp / 340.00 + 36.53); //equation for temperature in degrees C from datasheet
-  //Serial.print(" | GyX = "); Serial.println(GyX);
-  //Serial.print(" | GyY = "); Serial.println(GyY);
-  //Serial.print(" | GyZ = "); Serial.println(GyZ);
-  //Serial.println();
   delay(333);
 
   if (analogRead(X_pin) < 100 || AcX > 5000) {
     Serial.print("a");
-    //Serial.print("\n");
   }
   if (analogRead(X_pin) > 1000 || AcX < -5000) {
     Serial.print("d");
-    //Serial.print("\n");
   }
   if (analogRead(Y_pin) < 100 || AcY < -4000) {
     Serial.print("w");
-    //Serial.print("\n");
   }
   if (analogRead(Y_pin) > 1000 || AcY > 4000) {
     Serial.print("s");
-    //Serial.print("\n");
   }
 }
